@@ -3,17 +3,17 @@ FROM debian:10-slim AS builder
 RUN apt update && apt install -y wget unzip;
 
 # Download and unpack Java
-ARG JDK11_PATH=11.0.12+7
-ARG JDK11_FILE=11.0.12_7
+ARG JDK17_PATH=17+35
+ARG JDK17_FILE=17_35
 
-RUN wget https://github.com/adoptium/temurin11-binaries/releases/download/jdk-${JDK11_PATH}/OpenJDK11U-jdk_x64_linux_hotspot_${JDK11_FILE}.tar.gz -nv -O jdk.tar.gz \
+RUN wget https://github.com/adoptium/temurin17-binaries/releases/download/jdk-${JDK17_PATH}/OpenJDK17-jdk_x64_linux_hotspot_${JDK17_FILE}.tar.gz -nv -O jdk.tar.gz \
   && mkdir -p /jdk \
   && tar -xzf jdk.tar.gz -C /jdk --strip-components=1 \
   && rm jdk.tar.gz
 
 # Download and unpack Maven
-ARG MAVEN_VERSION=3.8.2
-ARG MAVEN_SHA=b0bf39460348b2d8eae1c861ced6c3e8a077b6e761fb3d4669be5de09490521a74db294cf031b0775b2dfcd57bd82246e42ce10904063ef8e3806222e686f222
+ARG MAVEN_VERSION=3.8.3
+ARG MAVEN_SHA=1c12a5df43421795054874fd54bb8b37d242949133b5bf6052a063a13a93f13a20e6e9dae2b3d85b9c7034ec977bbc2b6e7f66832182b9c863711d78bfe60faa
 
 RUN wget http://ftp.fau.de/apache/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz -nv -O maven.tar.gz\
   && echo "${MAVEN_SHA} maven.tar.gz" | sha512sum -c - \
